@@ -11,28 +11,30 @@
 </head>
 <body>
     <canvas id="myCanvas" resize></canvas>
-    <script type="text/javascript" canvas="myCanvas">
+    <script type="text/javascript" src="assets/patatap-keys.js"></script>
+    <script type="text/paperscript" canvas="myCanvas">
         var circles = [];
 
         // create a circle on keypress
-        function onKeyDown(event) {
-            var maxPoint = new Point(view.size.width, view.size.height);
-            var randomPoint = Point.random();
-            var point = maxPoint * randomPoint;
-            var newCircle = new Path.Circle(point, 100);
-            newCircle.fillColor = "orange";
-            circles.push(newCircle);
+        function onKeyDown(event) { 
+            if (keyData[event.key]) {
+                var maxPoint = new Point(view.size.width, view.size.height);
+                var randomPoint = Point.random();
+                var point = maxPoint *  randomPoint;
+                var newCircle = new Path.Circle(point, 250);
+                newCircle.fillColor = keyData[event.key].color;
+                circles.push(newCircle);
+                keyData[event.key].sound.play();
+            } 
         }
 
-        // animating the cirles
+        // animate the cirles
         function onFrame(event) {
             for (var i = 0; i < circles.length; i++) {
                 circles[i].fillColor.hue += 1;
                 circles[i].scale(.9);
             }
-        }
-
-            
+        }        
     </script>
 </body>
 </html>
